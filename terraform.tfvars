@@ -1,0 +1,9 @@
+vpc-cidr-useast1="10.0.0.0/16"
+subnet-cidr-useast1=["10.0.0.0/24"]
+subnet-cidr-private-useast1=["10.0.1.0/24"]
+pub-useast1-ami ="ami-04b4f1a9cf54c11d0"
+all-instance-type="t2.micro"
+key_name-useast1 = "rapyder"
+peer_region = "us-west-2"
+auto_accept = false
+peer_accept = true
