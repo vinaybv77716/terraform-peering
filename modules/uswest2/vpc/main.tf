@@ -69,7 +69,7 @@ resource "aws_nat_gateway" "gw-west" {
   count= length(var.uswest2-PrivateSubnet-cidr)
   subnet_id=element(var.uswest2-PublicSubnet-cidr, count.index)
   allocation_id = aws_eip.gw-uswest2[count.index].id 
-  depends_on = [aws_internet_gateway.igw-useast1]
+  #depends_on = [aws_internet_gateway.igw-useast1]
 }
 #####################################################
 

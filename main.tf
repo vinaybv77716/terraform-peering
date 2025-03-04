@@ -32,8 +32,10 @@ module "ec2-useast1" {
   all-instance-type=var.all-instance-type
   sg_id = module.mysg-useast1.sg_id
   key_name-useast1 = var.key_name-useast1
-   public-subnetsID-useast1 = module.vpc-useast1.subnet_ids-public
-    private-subnetsID-useast1 = module.vpc-useast1.subnet_ids-private
+   #public-subnetsID-useast1 = module.vpc-useast1.subnet_ids-public
+   public-subnetsID-useast1 = element(module.vpc-useast1.subnet_ids-public, 0)
+    #private-subnetsID-useast1 = module.vpc-useast1.subnet_ids-private
+    private-subnetsID-useast1 = element(module.vpc-useast1.subnet_ids-private, 0)
 }
 module "ec2-uswest2" {
   source = "./modules/uswest2/instance"
