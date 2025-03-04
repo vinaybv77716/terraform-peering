@@ -19,8 +19,8 @@ variable "uswest2-key_name" {
   description = "devops is the key name which is allready created"
 }
 variable "uswest2-PublicSubnet-ID" {
-  
+  type = list(string)
 }
 variable "uswest2-PrivateSubnet-ID" {
-  
+  type = list(string)
 }

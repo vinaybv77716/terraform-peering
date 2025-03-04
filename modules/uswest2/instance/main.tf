@@ -8,7 +8,8 @@ resource "aws_instance" "public-uswest2" {
   associate_public_ip_address = true
   vpc_security_group_ids = [var.uswest2-sg]
   key_name      = var.uswest2-key_name
-  subnet_id=var.uswest2-PublicSubnet-ID
+   #subnet_id=element(var.uswest2-PublicSubnet-ID, 0)
+  subnet_id=var.uswest2-PublicSubnet-ID[count.index]
   #availability_zone = "us-east-1"
     tags = {
     Name = "public-uswest2"
@@ -24,7 +25,7 @@ resource "aws_instance" "private-uswest2" {
   provider = aws.uswest2
   vpc_security_group_ids = [var.uswest2-sg]
    key_name      = var.uswest2-key_name
-  subnet_id=var.uswest2-PrivateSubnet-ID
+  subnet_id=var.uswest2-PrivateSubnet-ID[count.index]
   #availability_zone = "us-east-1"
     tags = {
     Name = "private-uswest2"

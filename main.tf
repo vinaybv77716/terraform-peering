@@ -43,8 +43,8 @@ module "ec2-uswest2" {
   all-instance_type=var.all-instance_type
   uswest2-sg = module.mysg-uswest2.uswest2-sg-ID
   uswest2-key_name=var.uswest2-key_name
-  uswest2-PublicSubnet-ID=module.vpc-uswest2.subnet_ids-public-uswest2
-  uswest2-PrivateSubnet-ID=module.vpc-uswest2.subnet_ids-private-uswest2
+  uswest2-PublicSubnet-ID=element(module.vpc-uswest2.subnet_ids-public-uswest2, 0)
+  uswest2-PrivateSubnet-ID=element(module.vpc-uswest2.subnet_ids-private-uswest2, 0)
 }
 
 
