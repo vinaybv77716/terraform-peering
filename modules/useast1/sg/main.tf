@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg" {
     provider = aws.useast1
-  name        = "sg-useast1"
+  name        = "useast1-security"
   description = "Allow HTTP, SSH inbound traffic"
   vpc_id      = var.vpc_id
 

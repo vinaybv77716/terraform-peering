@@ -46,7 +46,7 @@ resource "aws_route_table" "rt-public-useast1" {
 resource "aws_route_table_association" "rtas-public-useast1" {
   count = length(var.subnet-cidr-useast1)
   provider = aws.useast1
-subnet_id=aws_subnet.my-subnet-public-useast1.id
+subnet_id=aws_subnet.my-subnet-public-useast1.id[count.index]
 route_table_id=aws_route_table.rt-public-useast1.id 
 }
 
@@ -60,7 +60,7 @@ resource "aws_eip" "gw-useast1" {
 resource "aws_nat_gateway" "gw-east" {
   #count         = var.az_count
   provider = aws.useast1
-  subnet_id=aws_subnet.my-subnet-public-useast1.id
+  subnet_id=aws_subnet.my-subnet-public-useast1.id[count.index]
   allocation_id = aws_eip.gw-useast1.id 
   depends_on = [aws_internet_gateway.igw-useast1]
 }
@@ -79,6 +79,6 @@ resource "aws_route_table" "rt-private-useast1" {
 resource "aws_route_table_association" "rtas-private-useast1" {
   count = length(var.subnet-cidr-private-useast1)
   provider = aws.useast1
-subnet_id=aws_subnet.my-subnet-private-useast1.id
+subnet_id=aws_subnet.my-subnet-private-useast1.id[count.index]
 route_table_id=aws_route_table.rt-private-useast1.id
 }

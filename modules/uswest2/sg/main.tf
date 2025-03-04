@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg" {
     provider = aws.uswest2
-  name        = "sg-uswest2"
+  name        = "uswest2-security"
   description = "Allow HTTP, SSH inbound traffic"
   vpc_id      = var.vpc_id
 
