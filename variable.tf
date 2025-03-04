@@ -48,6 +48,10 @@ variable "key_name-useast1" {
   description = "this key can be worked for both the instance in us-east-1"
   type = string
 }
+variable "uswest2-key_name" {
+  type = string
+  description = "devops is the key name which is allready created"
+}
 variable "peer_region" {
   type = string
   description = "this should be us-west-2"

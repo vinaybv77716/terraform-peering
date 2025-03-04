@@ -43,8 +43,6 @@ module "ec2-uswest2" {
   uswest2-key_name=var.uswest2-key_name
   uswest2-PublicSubnet-ID=module.vpc-uswest2.subnet_ids-public-uswest2
   uswest2-PrivateSubnet-ID=module.vpc-uswest2.subnet_ids-private-uswest2
-  # sg_id = module.mysg.sg_id
-  # subnets = module.vpc.subnet_ids
 }
 
 

@@ -21,3 +21,6 @@ variable "uswest2-key_name" {
 variable "uswest2-PublicSubnet-ID" {
   
 }
+variable "uswest2-PrivateSubnet-ID" {
+  
+}
