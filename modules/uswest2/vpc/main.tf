@@ -60,15 +60,16 @@ resource "aws_route_table_association" "rtas-public-uswest2" {
 
 resource "aws_eip" "gw-uswest2" {
   provider = aws.uswest2
-  #count      = var.az_count #2
+  count= length(var.uswest2-PrivateSubnet-cidr)
   vpc        = true
   depends_on = [aws_internet_gateway.igw-uswest2]
 }
 resource "aws_nat_gateway" "gw-west" {
   provider = aws.uswest2
-  #count         = var.az_count
-  subnet_id=aws_subnet.my-subnet-public-uswest2[count.index].id
-  allocation_id = aws_eip.gw-uswest2.id 
+  count= length(var.uswest2-PrivateSubnet-cidr)
+  subnet_id=element(var.uswest2-PublicSubnet-cidr, count.index)
+  allocation_id = aws_eip.gw-uswest2[count.index].id 
+  depends_on = [aws_internet_gateway.igw-useast1]
 }
 #####################################################
 
@@ -78,7 +79,7 @@ resource "aws_route_table" "rt-private-uswest2" {
     provider = aws.uswest2
     route{
         cidr_block="0.0.0.0/0"
-        gateway_id=aws_nat_gateway.gw-west.id
+        gateway_id=element(aws_nat_gateway.gw-west[*].id, 0)
     }
 }
 ###################################################

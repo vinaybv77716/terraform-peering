@@ -53,15 +53,15 @@ resource "aws_route_table_association" "rtas-public-useast1" {
 # Create a NAT gateway with an Elastic IP for each private subnet to get internet connectivity
 resource "aws_eip" "gw-useast1" {
   provider = aws.useast1
-  #count      = var.az_count #2
+  count         = length(var.subnet-cidr-useast1)
   vpc        = true
   depends_on = [aws_internet_gateway.igw-useast1]
 }
 resource "aws_nat_gateway" "gw-east" {
-  #count         = var.az_count
+  count         = length(var.subnet-cidr-useast1)
   provider = aws.useast1
-  subnet_id=aws_subnet.my-subnet-public-useast1[count.index].id
-  allocation_id = aws_eip.gw-useast1.id 
+  subnet_id=element(var.subnet-cidr-useast1, count.index)
+  allocation_id = aws_eip.gw-useast1[count.index].id 
   depends_on = [aws_internet_gateway.igw-useast1]
 }
 
@@ -71,7 +71,8 @@ resource "aws_route_table" "rt-private-useast1" {
     provider = aws.useast1
     route{
         cidr_block="0.0.0.0/0"
-        gateway_id=aws_nat_gateway.gw-east.id
+        gateway_id=element(aws_nat_gateway.gw-east[*].id, 0)
+                #   element(var.subnet-cidr-useast1, count.index)
     }
 }
 
