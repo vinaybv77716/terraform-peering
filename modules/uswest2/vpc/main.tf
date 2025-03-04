@@ -67,7 +67,7 @@ resource "aws_eip" "gw-uswest2" {
 resource "aws_nat_gateway" "gw-west" {
   provider = aws.uswest2
   #count         = var.az_count
-  subnet_id=aws_subnet.my-subnet-public-uswest2.id
+  subnet_id=aws_subnet.my-subnet-public-uswest2[count.index].id
   allocation_id = aws_eip.gw-uswest2.id 
 }
 #####################################################

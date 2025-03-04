@@ -60,7 +60,7 @@ resource "aws_eip" "gw-useast1" {
 resource "aws_nat_gateway" "gw-east" {
   #count         = var.az_count
   provider = aws.useast1
-  subnet_id=aws_subnet.my-subnet-public-useast1.id[count.index]
+  subnet_id=aws_subnet.my-subnet-public-useast1[count.index].id
   allocation_id = aws_eip.gw-useast1.id 
   depends_on = [aws_internet_gateway.igw-useast1]
 }
