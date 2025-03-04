@@ -46,8 +46,8 @@ resource "aws_route_table" "rt-public-useast1" {
 resource "aws_route_table_association" "rtas-public-useast1" {
   count = length(var.subnet-cidr-useast1)
   provider = aws.useast1
-subnet_id=aws_subnet.my-subnet-public-useast1.id[count.index]
-route_table_id=aws_route_table.rt-public-useast1.id 
+  subnet_id=aws_subnet.my-subnet-public-useast1[count.index].id
+  route_table_id=aws_route_table.rt-public-useast1.id 
 }
 
 # Create a NAT gateway with an Elastic IP for each private subnet to get internet connectivity
@@ -79,6 +79,6 @@ resource "aws_route_table" "rt-private-useast1" {
 resource "aws_route_table_association" "rtas-private-useast1" {
   count = length(var.subnet-cidr-private-useast1)
   provider = aws.useast1
-subnet_id=aws_subnet.my-subnet-private-useast1.id[count.index]
+subnet_id=aws_subnet.my-subnet-private-useast1[count.index].id
 route_table_id=aws_route_table.rt-private-useast1.id
 }

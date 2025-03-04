@@ -51,7 +51,7 @@ resource "aws_route_table" "rt-public-uswest2" {
 resource "aws_route_table_association" "rtas-public-uswest2" {
   count = length(var.uswest2-PublicSubnet-cidr)
   provider = aws.uswest2
-  subnet_id=aws_subnet.my-subnet-public-uswest2.id[count.index]
+  subnet_id=aws_subnet.my-subnet-public-uswest2[count.index].id
   route_table_id=aws_route_table.rt-public-uswest2.id 
 }
 #################################################
@@ -87,6 +87,6 @@ resource "aws_route_table" "rt-private-uswest2" {
 resource "aws_route_table_association" "rtas-private-uswest2" {
   count = length(var.uswest2-PrivateSubnet-cidr)
   provider = aws.uswest2
-subnet_id=aws_subnet.my-subnet-private-uswest2.id[count.index]
+subnet_id=aws_subnet.my-subnet-private-uswest2[count.index].id
 route_table_id=aws_route_table.rt-private-uswest2.id
 }
