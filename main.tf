@@ -7,8 +7,10 @@ module "vpc-useast1"{
 }
 module "vpc-uswest2"{
     source="./modules/uswest2/vpc"
-    # vpc-cidr=var.vpc-cidr
-    # subnet-cidr=var.subnet-cidr
+    uswest2-vpc-cidr=var.uswest2-vpc-cidr
+    uswest2-PublicSubnet-cidr=var.uswest2-PublicSubnet-cidr
+    uswest2-PrivateSubnet-cidr=var.uswest2-PrivateSubnet-cidr
+    availability_zone-subnets=var.availability_zone-subnets
 }
 
 
@@ -19,7 +21,7 @@ module "mysg-useast1"{
 }
 module "mysg-uswest2"{
     source="./modules/uswest2/sg"
-   # vpc_id=module.vpc.vpc_id
+    vpc_id=module.vpc-uswest2.vpc_id-uswest2
 }
 
 
@@ -35,6 +37,12 @@ module "ec2-useast1" {
 }
 module "ec2-uswest2" {
   source = "./modules/uswest2/instance"
+  uswest2-ami = var.uswest2-ami
+  all-instance_type=var.all-instance_type
+  uswest2-sg = module.mysg-uswest2.uswest2-sg-ID
+  uswest2-key_name=var.uswest2-key_name
+  uswest2-PublicSubnet-ID=module.vpc-uswest2.subnet_ids-public-uswest2
+  uswest2-PrivateSubnet-ID=module.vpc-uswest2.subnet_ids-private-uswest2
   # sg_id = module.mysg.sg_id
   # subnets = module.vpc.subnet_ids
 }

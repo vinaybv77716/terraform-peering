@@ -1,6 +1,6 @@
 #vpc
 resource "aws_vpc" "uswest2-vpc-1"{
-    cidr_block="20.0.0.0/16"
+    cidr_block=var.uswest2-vpc-cidr
     provider = aws.uswest2
     tags={
         "Name"="uswest2-vpc-1"
@@ -8,24 +8,24 @@ resource "aws_vpc" "uswest2-vpc-1"{
 }
 ##############################################
 
-#Subnet
+#PublicSubnet
 resource "aws_subnet" "my-subnet-public-uswest2"{
     vpc_id=aws_vpc.uswest2-vpc-1.id
     provider = aws.uswest2
     map_public_ip_on_launch=true
-    cidr_block="20.0.1.0/24"
-    #count=length(var.subnet-cidr)
-      availability_zone = "us-west-2a"
+    cidr_block=var.uswest2-PublicSubnet-cidr[count.index]
+    count=length(var.uswest2-PublicSubnet-cidr)
+      availability_zone = var.availability_zone-subnets
 }
 ###############################################
 
-#Subnet
+#PrivateSubnet
 resource "aws_subnet" "my-subnet-private-uswest2"{
     vpc_id=aws_vpc.uswest2-vpc-1.id
     provider = aws.uswest2
-    cidr_block="20.0.2.0/24"
-    #count=length(var.subnet-cidr)
-      availability_zone = "us-west-2a"
+    cidr_block=var.uswest2-PrivateSubnet-cidr[count.index]
+    count=length(var.uswest2-PrivateSubnet-cidr)
+      availability_zone = var.availability_zone-subnets
 }
 ##############################################
 
@@ -49,7 +49,7 @@ resource "aws_route_table" "rt-public-uswest2" {
 
 #Subnet-assocation-public
 resource "aws_route_table_association" "rtas-public-uswest2" {
-  #count = length(var.subnet-cidr)
+  count = length(var.uswest2-PublicSubnet-cidr)
   provider = aws.uswest2
 subnet_id=aws_subnet.my-subnet-public-uswest2.id
 route_table_id=aws_route_table.rt-public-uswest2.id 
@@ -85,7 +85,7 @@ resource "aws_route_table" "rt-private-uswest2" {
 
 #Subnet-assocation-private
 resource "aws_route_table_association" "rtas-private-uswest2" {
-  #count = length(var.subnet-cidr)
+  count = length(var.uswest2-PrivateSubnet-cidr)
   provider = aws.uswest2
 subnet_id=aws_subnet.my-subnet-private-uswest2.id
 route_table_id=aws_route_table.rt-private-uswest2.id

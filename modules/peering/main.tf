@@ -14,7 +14,7 @@ resource "aws_vpc_peering_connection" "peer" {
 
 resource "aws_vpc_peering_connection_accepter" "peer_accept" {
   provider                  = aws.uswest2
-  vpc_peering_connection_id = aws_vpc_peering_consnection.peer.id  ########  dought  #######
+   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
   auto_accept               = var.peer_accept
 
   tags = {
